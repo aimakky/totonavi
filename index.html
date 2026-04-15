@@ -349,6 +349,48 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
     </div>
   </section>
 
+  <!-- 使い方3ステップ -->
+  <section style="background:#fff">
+    <div class="container">
+      <div class="section-title">
+        <h2>30秒でわかる使い方</h2>
+        <p>はじめての方もすぐ使えます</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center">
+        <div style="padding:24px;background:#f0fdfa;border-radius:16px">
+          <div style="font-size:2.5rem;margin-bottom:12px">🧠</div>
+          <div style="font-weight:800;font-size:1rem;margin-bottom:8px;color:#0d9488">STEP 1</div>
+          <div style="font-weight:700;margin-bottom:6px">AI診断を受ける</div>
+          <div style="font-size:.82rem;color:#6b7280">5つの質問に答えるだけ。約1分。</div>
+        </div>
+        <div style="padding:24px;background:#eff6ff;border-radius:16px">
+          <div style="font-size:2.5rem;margin-bottom:12px">📍</div>
+          <div style="font-weight:800;font-size:1rem;margin-bottom:8px;color:#2563eb">STEP 2</div>
+          <div style="font-weight:700;margin-bottom:6px">スポットを選ぶ</div>
+          <div style="font-size:.82rem;color:#6b7280">AIがあなたに合った場所を提案。</div>
+        </div>
+        <div style="padding:24px;background:#fef9c3;border-radius:16px">
+          <div style="font-size:2.5rem;margin-bottom:12px">🔗</div>
+          <div style="font-weight:800;font-size:1rem;margin-bottom:8px;color:#d97706">STEP 3</div>
+          <div style="font-weight:700;margin-bottom:6px">すぐ予約する</div>
+          <div style="font-size:.82rem;color:#6b7280">そのまま予約。今日から回復。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 掲載店舗募集バナー -->
+  <div style="background:linear-gradient(135deg,#1e293b,#0f172a);color:#fff;padding:32px 0">
+    <div class="container" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+      <div>
+        <div style="font-size:.85rem;color:#94a3b8;margin-bottom:6px">📢 店舗オーナーの方へ</div>
+        <div style="font-size:1.2rem;font-weight:800;margin-bottom:4px">掲載店舗を無料募集中！</div>
+        <div style="font-size:.88rem;color:#94a3b8">初期費用0円・手間なし・いつでも退会OK</div>
+      </div>
+      <button class="btn btn-primary" onclick="showPage('contact')" style="white-space:nowrap;padding:14px 28px">無料で掲載する →</button>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div class="cta">
     <div class="container">
@@ -463,6 +505,84 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         </div>
         <p style="text-align:center;font-size:.85rem;color:#6b7280;margin-top:16px">すでにアカウントをお持ちですか？ <span style="color:#0d9488;cursor:pointer;font-weight:600">ログイン</span></p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT / 店舗掲載お問い合わせ -->
+<div id="page-contact" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px;max-width:560px">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:3rem;margin-bottom:12px">🏪</div>
+      <h1 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">無料掲載のお申し込み</h1>
+      <p style="color:#6b7280;font-size:.9rem;line-height:1.7">初期費用0円・手間なし・いつでも退会OK<br>まずはお気軽にご連絡ください！</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px">
+      <div style="background:#f0fdfa;border-radius:14px;padding:16px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">✅</div>
+        <div style="font-size:.8rem;font-weight:700;color:#0d9488">完全無料</div>
+        <div style="font-size:.75rem;color:#6b7280">掲載費0円</div>
+      </div>
+      <div style="background:#eff6ff;border-radius:14px;padding:16px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">⚡</div>
+        <div style="font-size:.8rem;font-weight:700;color:#2563eb">最短即日</div>
+        <div style="font-size:.75rem;color:#6b7280">掲載開始</div>
+      </div>
+      <div style="background:#fef9c3;border-radius:14px;padding:16px;text-align:center">
+        <div style="font-size:1.5rem;margin-bottom:6px">🔓</div>
+        <div style="font-size:.8rem;font-weight:700;color:#d97706">いつでも</div>
+        <div style="font-size:.75rem;color:#6b7280">退会OK</div>
+      </div>
+    </div>
+
+    <div id="contact-success" style="display:none;text-align:center;padding:40px;background:#f0fdfa;border-radius:20px;margin-bottom:24px">
+      <div style="font-size:3rem;margin-bottom:12px">🎉</div>
+      <div style="font-size:1.2rem;font-weight:800;margin-bottom:8px">送信完了！</div>
+      <div style="color:#6b7280;font-size:.9rem;margin-bottom:20px">ご連絡ありがとうございます。<br>担当者より2営業日以内にご連絡します。</div>
+      <button class="btn btn-primary" onclick="showPage('home')">トップに戻る</button>
+    </div>
+
+    <div id="contact-form-wrap" style="background:#fff;border:1.5px solid #e5e7eb;border-radius:20px;padding:28px">
+      <form onsubmit="handleContact(event)">
+        <div class="form-group">
+          <label class="form-label">店舗名 *</label>
+          <input id="c-shop" class="form-input" type="text" placeholder="例：サウナしきじ 梅田店">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ジャンル *</label>
+          <select id="c-genre" class="form-input" style="cursor:pointer">
+            <option value="">選択してください</option>
+            <option>サウナ</option>
+            <option>整体</option>
+            <option>マッサージ</option>
+            <option>酸素カプセル</option>
+            <option>ストレッチ</option>
+            <option>岩盤浴</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">担当者名 *</label>
+          <input id="c-name" class="form-input" type="text" placeholder="山田 太郎">
+        </div>
+        <div class="form-group">
+          <label class="form-label">電話番号 *</label>
+          <input id="c-tel" class="form-input" type="tel" placeholder="06-1234-5678">
+        </div>
+        <div class="form-group">
+          <label class="form-label">メールアドレス *</label>
+          <input id="c-email" class="form-input" type="email" placeholder="shop@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">メッセージ（任意）</label>
+          <textarea id="c-msg" class="form-input" style="height:100px;resize:none" placeholder="ご質問・ご要望などお気軽に"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="padding:16px;font-size:1rem;border-radius:14px">無料で掲載申し込みをする 🚀</button>
+      </form>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <span style="color:#0d9488;cursor:pointer;font-size:.88rem;font-weight:600" onclick="showPage('home')">← トップに戻る</span>
     </div>
   </div>
 </div>
@@ -723,6 +843,11 @@ function showResult(){
       ${tips.map(t=>`<div class="tip-item"><span>⚡</span><span>${t}</span></div>`).join('')}
     </div>
     ${rec.length?`<div class="rec-title">あなたにおすすめのスポット</div><div class="shops-grid">${rec.map((s,i)=>shopCard(s,i===0)).join('')}</div>`:''}
+    <div style="background:#f0fdfa;border-radius:16px;padding:20px;margin-bottom:16px;text-align:center">
+      <div style="font-size:.9rem;color:#0d9488;font-weight:700;margin-bottom:8px">📞 おすすめスポットに今すぐ電話する</div>
+      <div style="font-size:.82rem;color:#6b7280;margin-bottom:14px">予約はお電話が一番早い！</div>
+      ${rec.length?`<a href="tel:" onclick="alert('実際の店舗電話番号に繋がります（デモ）')" class="btn btn-primary btn-block" style="text-decoration:none;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">📞 ${rec[0].name}に電話する</a>`:''}
+    </div>
     <div class="retry-link"><button onclick="diagStep=1;diagAns={};document.getElementById('diag-steps').style.display='';document.getElementById('diag-result').style.display='none';renderDiag()">もう一度診断する</button></div>
   </div>`;
   setTimeout(()=>{const b=document.getElementById('sbar');if(b)b.style.width=score+'%';},100);
@@ -753,6 +878,20 @@ function updateStrength(){
   const labs=['弱い','まあまあ','良い','強い'];
   document.getElementById('s-bars').innerHTML=[1,2,3,4].map(i=>`<div class="sbar" style="background:${i<=s?cols[s-1]:'#e5e7eb'}"></div>`).join('');
   document.getElementById('s-label').textContent=labs[s-1];
+}
+
+// ========== CONTACT ==========
+function handleContact(e){
+  e.preventDefault();
+  const shop=document.getElementById('c-shop').value.trim();
+  const genre=document.getElementById('c-genre').value;
+  const name=document.getElementById('c-name').value.trim();
+  const tel=document.getElementById('c-tel').value.trim();
+  const email=document.getElementById('c-email').value.trim();
+  if(!shop||!genre||!name||!tel||!email){alert('必須項目をすべて入力してください');return;}
+  document.getElementById('contact-form-wrap').style.display='none';
+  document.getElementById('contact-success').style.display='block';
+  window.scrollTo(0,0);
 }
 
 // ========== INIT ==========
