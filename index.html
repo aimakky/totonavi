@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>トトナビ | 疲労回復に特化した予約プラットフォーム</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Hiragino Sans','Meiryo',sans-serif}
+body{background:#f8fafc;color:#111827;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+/* ---- LAYOUT ---- */
+.page{display:none}.page.active{display:block}
+.container{max-width:1024px;margin:0 auto;padding:0 1rem}
+/* ---- HEADER ---- */
+header{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1.25rem;font-weight:700}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#14b8a6,#2563eb);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{background:linear-gradient(135deg,#0d9488,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav{display:flex;align-items:center;gap:24px}
+.nav-link{color:#4b5563;font-weight:500;cursor:pointer;font-size:.9rem;transition:color .2s}
+.nav-link:hover{color:#0d9488}
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;cursor:pointer;font-weight:700;border-radius:14px;padding:10px 20px;font-size:.9rem;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff}
+.btn-primary:hover{opacity:.9;transform:scale(1.03);box-shadow:0 4px 16px rgba(14,184,166,.35)}
+.btn-white{background:#fff;color:#0d9488}
+.btn-white:hover{background:#f0fdfa;transform:scale(1.02);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.btn-outline{border:2px solid rgba(255,255,255,.4);background:transparent;color:#fff}
+.btn-outline:hover{background:rgba(255,255,255,.15)}
+.btn-lg{padding:14px 32px;font-size:1.1rem;border-radius:16px}
+.btn-block{width:100%;justify-content:center}
+/* ---- HERO ---- */
+.hero{background:linear-gradient(135deg,#0d9488 0%,#0f766e 45%,#1d4ed8 100%);color:#fff;padding:80px 0;text-align:center;position:relative;overflow:hidden}
+.hero-blob1{position:absolute;top:40px;left:40px;width:280px;height:280px;background:#fff;border-radius:50%;opacity:.07;filter:blur(60px)}
+.hero-blob2{position:absolute;bottom:40px;right:40px;width:360px;height:360px;background:#93c5fd;border-radius:50%;opacity:.1;filter:blur(70px)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:6px 16px;border-radius:99px;font-size:.85rem;font-weight:500;margin-bottom:24px}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.2;margin-bottom:20px}
+.hero h1 span{color:#99f6e4}
+.hero p{font-size:1.05rem;color:#ccfbf1;max-width:520px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:40px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;font-size:.85rem;color:#99f6e4}
+/* ---- SECTIONS ---- */
+section{padding:56px 0}
+.section-title{text-align:center;margin-bottom:36px}
+.section-title h2{font-size:1.7rem;font-weight:800;color:#111827;margin-bottom:8px}
+.section-title p{color:#6b7280;font-size:.95rem}
+/* ---- GENRE GRID ---- */
+.genre-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:640px){.genre-grid{grid-template-columns:repeat(3,1fr)}}
+.genre-card{background:#fff;border-radius:16px;padding:20px;border:1.5px solid #e5e7eb;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.genre-card:hover{border-color:#14b8a6;box-shadow:0 4px 16px rgba(14,184,166,.15);transform:translateY(-2px)}
+.genre-icon{font-size:2rem;margin-bottom:10px}
+.genre-card h3{font-weight:700;color:#111827;margin-bottom:4px}
+.genre-card p{font-size:.78rem;color:#6b7280;line-height:1.5}
+.genre-arrow{position:absolute;bottom:12px;right:12px;color:#d1d5db;font-size:.8rem;transition:color .2s}
+.genre-card:hover .genre-arrow{color:#14b8a6}
+/* ---- FEATURES ---- */
+.features-bg{background:linear-gradient(135deg,#f8fafc,#f0fdfa)}
+.features-grid{display:grid;gap:16px}
+@media(min-width:640px){.features-grid{grid-template-columns:repeat(3,1fr)}}
+.feature-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #e5e7eb}
+.feature-icon{width:48px;height:48px;border-radius:12px;background:#f0fdfa;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px}
+.feature-card h3{font-weight:700;font-size:1.05rem;margin-bottom:8px}
+.feature-card p{color:#6b7280;font-size:.88rem;line-height:1.6}
+/* ---- SHOP CARDS ---- */
+.shops-grid{display:grid;gap:16px}
+@media(min-width:640px){.shops-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.shops-grid{grid-template-columns:repeat(3,1fr)}}
+.shop-card{background:#fff;border-radius:16px;border:1.5px solid #e5e7eb;overflow:hidden;transition:all .2s;cursor:pointer}
+.shop-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.1);transform:translateY(-2px)}
+.shop-card.highlight{border-color:#14b8a6;box-shadow:0 0 0 3px rgba(20,184,166,.15)}
+.shop-img{height:172px;background:linear-gradient(135deg,#ccfbf1,#bfdbfe);position:relative;overflow:hidden}
+.shop-img img{width:100%;height:100%;object-fit:cover}
+.shop-genre-badge{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.92);padding:4px 10px;border-radius:99px;font-size:.78rem;font-weight:600;color:#374151}
+.shop-ai-badge{position:absolute;top:10px;right:10px;background:#14b8a6;color:#fff;padding:4px 10px;border-radius:99px;font-size:.72rem;font-weight:700}
+.shop-body{padding:14px}
+.shop-name{font-weight:700;font-size:1.05rem;margin-bottom:4px;color:#111827}
+.stars{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+.star{color:#e5e7eb;font-size:.9rem}.star.on{color:#facc15}
+.rating-num{font-weight:700;font-size:.88rem;color:#111827}
+.rating-cnt{font-size:.75rem;color:#9ca3af}
+.shop-meta{margin-bottom:10px}
+.shop-meta div{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#6b7280;margin-bottom:3px}
+.shop-price{color:#0d9488;font-weight:700;font-size:.88rem;margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.tag{background:#f3f4f6;color:#6b7280;font-size:.72rem;padding:2px 8px;border-radius:99px}
+.shop-btns{display:flex;gap:8px}
+.shop-btn-detail{flex:1;background:#f3f4f6;color:#374151;border:none;border-radius:10px;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background .2s}
+.shop-btn-detail:hover{background:#e5e7eb}
+.shop-btn-book{flex:1;background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff;border:none;border-radius:10px;padding:9px;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:4px}
+.shop-btn-book:hover{opacity:.9}
+/* ---- CTA ---- */
+.cta{background:linear-gradient(135deg,#0d9488,#2563eb);color:#fff;text-align:center;padding:60px 0}
+.cta h2{font-size:1.6rem;font-weight:800;margin-bottom:14px}
+.cta p{color:#ccfbf1;margin-bottom:28px;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto}
+/* ---- SHOPS PAGE ---- */
+.page-title{margin-bottom:28px}
+.page-title h1{font-size:1.7rem;font-weight:800;color:#111827;margin-bottom:4px}
+.page-title p{color:#6b7280;font-size:.9rem}
+.search-box{position:relative;margin-bottom:16px}
+.search-box input{width:100%;padding:12px 16px 12px 44px;border:1.5px solid #e5e7eb;border-radius:14px;font-size:.95rem;color:#111827;background:#fff;outline:none;transition:border .2s}
+.search-box input:focus{border-color:#14b8a6;box-shadow:0 0 0 3px rgba(20,184,166,.1)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:1.1rem}
+.filter-row{margin-bottom:12px}
+.filter-label{font-size:.82rem;font-weight:600;color:#4b5563;margin-bottom:8px;display:flex;align-items:center;gap:4px}
+.filter-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 14px;border-radius:99px;font-size:.82rem;font-weight:500;cursor:pointer;border:1.5px solid #e5e7eb;background:#fff;color:#4b5563;transition:all .2s}
+.chip:hover{border-color:#14b8a6}
+.chip.active-gray{background:#1f2937;color:#fff;border-color:#1f2937}
+.chip.active-teal{background:#14b8a6;color:#fff;border-color:#14b8a6}
+.result-count{font-size:.88rem;color:#6b7280;margin-bottom:14px}
+.result-count span{font-weight:700;color:#111827}
+/* ---- SHOP DETAIL ---- */
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#6b7280;font-size:.88rem;cursor:pointer;margin-bottom:20px;transition:color .2s}
+.back-link:hover{color:#0d9488}
+.detail-img{height:220px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#ccfbf1,#bfdbfe);position:relative;margin-bottom:20px}
+.detail-img img{width:100%;height:100%;object-fit:cover}
+.detail-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #e5e7eb;margin-bottom:16px}
+.detail-title{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.detail-stars{display:flex;align-items:center;gap:6px;margin-bottom:16px}
+.detail-meta{margin-bottom:16px}
+.detail-meta div{display:flex;align-items:flex-start;gap:8px;font-size:.88rem;color:#4b5563;margin-bottom:8px}
+.price-box{background:#f0fdfa;border-radius:12px;padding:12px;margin-bottom:16px}
+.price-label{font-size:.75rem;color:#0d9488;font-weight:600;margin-bottom:2px}
+.price-val{font-size:1.3rem;font-weight:800;color:#0f766e}
+.desc-text{color:#4b5563;font-size:.9rem;line-height:1.7;margin-bottom:16px}
+.features-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.feature-item{display:flex;align-items:center;gap:6px;font-size:.85rem;color:#374151}
+.shop-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.shop-tag{background:#f3f4f6;color:#6b7280;font-size:.78rem;padding:4px 10px;border-radius:99px}
+.book-btn{width:100%;background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff;border:none;border-radius:14px;padding:16px;font-size:1.05rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s}
+.book-btn:hover{opacity:.9}
+.map-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#fff;color:#0d9488;border:2px solid #0d9488;border-radius:14px;padding:12px;font-size:.95rem;font-weight:700;text-decoration:none;margin-bottom:12px;transition:all .2s}
+.map-btn:hover{background:#f0fdfa;box-shadow:0 4px 12px rgba(13,148,136,.2)}
+.book-note{font-size:.75rem;color:#9ca3af;text-align:center;margin-top:6px}
+.ai-cta-box{background:linear-gradient(135deg,#0d9488,#2563eb);border-radius:16px;padding:20px;color:#fff;margin-bottom:20px}
+.ai-cta-box h3{font-weight:700;font-size:1.05rem;margin-bottom:4px}
+.ai-cta-box p{font-size:.85rem;color:#ccfbf1;margin-bottom:14px}
+.ai-cta-btn{background:#fff;color:#0d9488;border:none;border-radius:10px;padding:10px 18px;font-size:.85rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
+.ai-cta-btn:hover{background:#f0fdfa}
+/* ---- DIAGNOSIS ---- */
+.diag-wrap{max-width:520px;margin:0 auto}
+.diag-header{text-align:center;margin-bottom:28px}
+.diag-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#14b8a6,#2563eb);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px}
+.diag-header h1{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.diag-header p{color:#6b7280;font-size:.88rem}
+.step-bar{display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.step-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0;transition:all .3s}
+.step-done{background:#14b8a6;color:#fff}
+.step-cur{background:#0d9488;color:#fff;box-shadow:0 0 0 4px rgba(20,184,166,.25)}
+.step-todo{background:#e5e7eb;color:#9ca3af}
+.step-line{flex:1;height:4px;border-radius:2px;transition:background .3s}
+.step-line.done{background:#5eead4}.step-line.todo{background:#e5e7eb}
+.step-label{font-size:.75rem;color:#9ca3af;text-align:center;margin-bottom:20px}
+.q-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #e5e7eb;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.q-title{font-size:1.1rem;font-weight:700;color:#111827;margin-bottom:4px}
+.q-sub{font-size:.85rem;color:#6b7280;margin-bottom:20px}
+.level-btns{display:flex;gap:10px;justify-content:center;margin-bottom:8px}
+.level-btn{width:52px;height:52px;border-radius:12px;font-size:1.2rem;font-weight:700;border:2px solid #e5e7eb;background:#f9fafb;cursor:pointer;transition:all .2s}
+.level-btn.sel{background:#0d9488;color:#fff;border-color:#0d9488;transform:scale(1.1);box-shadow:0 4px 12px rgba(13,148,136,.35)}
+.level-hint{display:flex;justify-content:space-between;font-size:.72rem;color:#9ca3af;padding:0 4px}
+.sel-msg{margin-top:10px;text-align:center;font-size:.85rem;font-weight:600;color:#0d9488}
+.choice-list{display:flex;flex-direction:column;gap:10px}
+.choice-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;border:2px solid #e5e7eb;border-radius:12px;background:#fff;cursor:pointer;text-align:left;width:100%;transition:all .2s}
+.choice-btn:hover{border-color:#14b8a6;background:#f0fdfa}
+.choice-btn.sel{border-color:#0d9488;background:#f0fdfa}
+.choice-icon{font-size:1.8rem;flex-shrink:0}
+.choice-label{font-weight:700;font-size:.95rem;color:#111827;margin-bottom:2px}
+.choice-desc{font-size:.78rem;color:#6b7280}
+.check-mark{margin-left:auto;color:#0d9488;font-size:1.1rem;flex-shrink:0}
+.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.time-btn{padding:16px 8px;border:2px solid #e5e7eb;border-radius:12px;background:#fff;cursor:pointer;text-align:center;transition:all .2s}
+.time-btn:hover{border-color:#14b8a6;background:#f0fdfa}
+.time-btn.sel{border-color:#0d9488;background:#f0fdfa}
+.time-icon{font-size:1.5rem;margin-bottom:6px}
+.time-label{font-weight:700;font-size:1.05rem;color:#111827;margin-bottom:2px}
+.time-desc{font-size:.72rem;color:#6b7280}
+.step-nav{display:flex;gap:10px;margin-top:4px}
+.back-btn{display:flex;align-items:center;gap:6px;padding:12px 20px;border-radius:12px;border:1.5px solid #e5e7eb;background:#fff;color:#4b5563;font-weight:600;cursor:pointer;transition:background .2s}
+.back-btn:hover{background:#f9fafb}
+.next-btn{flex:1;padding:14px;border-radius:14px;border:none;font-weight:700;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.next-on{background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff}
+.next-on:hover{opacity:.9;transform:scale(1.02);box-shadow:0 4px 16px rgba(14,184,166,.35)}
+.next-off{background:#e5e7eb;color:#9ca3af;cursor:not-allowed}
+/* ---- RESULT ---- */
+.score-card{background:linear-gradient(135deg,#0d9488,#2563eb);border-radius:16px;padding:24px;color:#fff;margin-bottom:16px}
+.score-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.score-num{font-size:2.5rem;font-weight:800}
+.score-sub{font-size:.8rem;color:#99f6e4;margin-bottom:4px}
+.genre-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.genre-chip{background:rgba(255,255,255,.2);padding:3px 10px;border-radius:99px;font-size:.75rem;font-weight:600}
+.score-bar-bg{background:rgba(255,255,255,.2);border-radius:99px;height:10px}
+.score-bar-fill{background:#fff;border-radius:99px;height:10px;transition:width 1s ease}
+.score-hint{font-size:.75rem;color:#99f6e4;margin-top:6px}
+.msg-card{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e7eb;margin-bottom:16px}
+.msg-title{font-weight:700;font-size:1rem;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.msg-text{font-size:.88rem;color:#4b5563;line-height:1.7}
+.tips-box{background:#f0fdfa;border-radius:16px;padding:20px;margin-bottom:24px}
+.tips-title{font-weight:700;color:#134e4a;margin-bottom:12px;font-size:.95rem}
+.tip-item{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:#0f766e;margin-bottom:8px}
+.rec-title{font-size:1.2rem;font-weight:800;color:#111827;margin-bottom:16px}
+.retry-link{text-align:center;margin-top:24px}
+.retry-link button{background:none;border:none;color:#0d9488;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:underline}
+/* ---- REGISTER ---- */
+.reg-wrap{max-width:440px;margin:0 auto}
+.reg-header{text-align:center;margin-bottom:24px}
+.reg-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#14b8a6,#2563eb);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 12px}
+.reg-header h1{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.perks-box{background:#f0fdfa;border-radius:14px;padding:16px;margin-bottom:20px}
+.perks-title{font-size:.85rem;font-weight:700;color:#134e4a;margin-bottom:10px}
+.perk-item{display:flex;align-items:center;gap:8px;font-size:.85rem;color:#0f766e;margin-bottom:6px}
+.form-card{background:#fff;border-radius:16px;padding:24px;border:1px solid #e5e7eb;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:.85rem;font-weight:700;color:#374151;margin-bottom:6px}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:12px;font-size:.95rem;color:#111827;background:#f9fafb;outline:none;transition:all .2s}
+.form-input:focus{border-color:#14b8a6;box-shadow:0 0 0 3px rgba(20,184,166,.1);background:#fff}
+.form-input.err{border-color:#ef4444;background:#fef2f2}
+.form-err{font-size:.75rem;color:#ef4444;margin-top:4px;display:none}
+.form-err.show{display:block}
+.pass-strength{margin-top:8px;display:none}
+.pass-strength.show{display:block}
+.strength-bars{display:flex;gap:4px;margin-bottom:4px}
+.sbar{flex:1;height:4px;border-radius:2px;background:#e5e7eb;transition:background .3s}
+.strength-txt{font-size:.75rem;color:#9ca3af}
+.form-terms{font-size:.75rem;color:#9ca3af;text-align:center;margin-bottom:16px}
+.form-terms span{color:#0d9488;cursor:pointer}
+.success-wrap{text-align:center;padding:32px 0;display:none}
+.success-icon{font-size:3.5rem;margin-bottom:16px}
+.success-title{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+.success-sub{color:#6b7280;margin-bottom:24px;font-size:.9rem}
+/* ---- FOOTER ---- */
+footer{background:#111827;color:#9ca3af;margin-top:auto}
+.footer-inner{padding:36px 0}
+.footer-grid{display:flex;flex-direction:column;gap:28px}
+@media(min-width:640px){.footer-grid{flex-direction:row;justify-content:space-between}}
+.footer-brand p{font-size:.85rem;line-height:1.7;max-width:260px;margin-top:10px}
+.footer-links{display:flex;gap:40px}
+.footer-col h4{color:#fff;font-weight:700;font-size:.9rem;margin-bottom:12px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col li{font-size:.85rem;cursor:pointer;transition:color .2s}
+.footer-col li:hover{color:#14b8a6}
+.footer-bottom{border-top:1px solid #1f2937;padding:20px 0;text-align:center;font-size:.78rem}
+/* ---- RESPONSIVE ---- */
+@media(max-width:640px){
+  nav{display:none}
+  .mobile-menu-btn{display:flex!important}
+  .mobile-menu{display:none}
+  .mobile-menu.open{display:flex;flex-direction:column;gap:14px;padding:14px;border-top:1px solid #f3f4f6}
+}
+@media(min-width:641px){
+  .mobile-menu-btn{display:none!important}
+  .mobile-menu{display:none!important}
+}
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeInUp .4s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container header-inner">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">トトナビ</span>
+    </div>
+    <nav>
+      <span class="nav-link" onclick="showPage('shops')">スポット検索</span>
+      <span class="nav-link" onclick="showPage('diagnosis')">AI診断</span>
+      <span class="nav-link" onclick="showPage('register')">会員登録</span>
+      <button class="btn btn-primary" onclick="showPage('diagnosis')">⚡ 今すぐ回復予約</button>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" id="mob-btn">☰</button>
+  </div>
+  <div class="mobile-menu container" id="mobile-menu">
+    <span class="nav-link" onclick="showPage('shops');closeMobileMenu()">スポット検索</span>
+    <span class="nav-link" onclick="showPage('diagnosis');closeMobileMenu()">AI診断</span>
+    <span class="nav-link" onclick="showPage('register');closeMobileMenu()">会員登録</span>
+    <button class="btn btn-primary btn-block" onclick="showPage('diagnosis');closeMobileMenu()">⚡ 今すぐ回復予約</button>
+  </div>
+</header>
+
+<!-- ======== HOME ======== -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-blob1"></div>
+    <div class="hero-blob2"></div>
+    <div class="container" style="position:relative">
+      <div class="hero-badge">⚡ 疲労回復に特化したプラットフォーム</div>
+      <h1>疲れたら、<br class="sp-br"/>
+        <span>すぐ回復。</span>
+      </h1>
+      <p>AIが疲労を診断し、最適なサウナ・整体・マッサージ・酸素カプセルを提案。そのまま予約まで完結できる、回復のための専門サービス。</p>
+      <div class="hero-btns">
+        <button class="btn btn-white btn-lg" onclick="showPage('diagnosis')">🧠 AI診断を始める（無料）→</button>
+        <button class="btn btn-outline btn-lg" onclick="showPage('shops')">スポットを探す</button>
+      </div>
+      <div class="hero-stats">
+        <span>⭐ 掲載店舗 200+</span>
+        <span>❤️ 月間利用者 10,000+</span>
+        <span>⚡ AI診断 30,000+件</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ジャンル -->
+  <section>
+    <div class="container">
+      <div class="section-title">
+        <h2>回復スポットを探す</h2>
+        <p>ジャンルを選んで最適なスポットを見つけよう</p>
+      </div>
+      <div class="genre-grid">
+        <div class="genre-card" onclick="filterShops('sauna')"><div class="genre-icon">🔥</div><h3>サウナ</h3><p>ととのう体験で深いリラックス</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('seitai')"><div class="genre-icon">🦴</div><h3>整体</h3><p>体の歪みを根本から改善</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('massage')"><div class="genre-icon">💆</div><h3>マッサージ</h3><p>筋肉の緊張をほぐす</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('oxygen')"><div class="genre-icon">🫧</div><h3>酸素カプセル</h3><p>脳疲労・集中力回復に</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('stretch')"><div class="genre-icon">🧘</div><h3>ストレッチ</h3><p>体の硬さ・姿勢を改善</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('bath')"><div class="genre-icon">♨️</div><h3>岩盤浴</h3><p>じっくり温めてデトックス</p><span class="genre-arrow">→</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 機能説明 -->
+  <section class="features-bg">
+    <div class="container">
+      <div class="section-title">
+        <h2>トトナビでできること</h2>
+        <p>迷わず、すぐに回復できる体験を</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">🧠</div><h3>AI疲労診断</h3><p>5つの質問に答えるだけで、あなたの疲労タイプと最適な回復手段をAIが提案</p></div>
+        <div class="feature-card"><div class="feature-icon">⚡</div><h3>最適スポット提案</h3><p>疲労状態・時間・予算に合わせて、最も効果的な施設をランキング表示</p></div>
+        <div class="feature-card"><div class="feature-icon">📅</div><h3>即時予約</h3><p>気に入ったスポットへそのまま予約。スキマ時間も有効活用できる</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 注目スポット -->
+  <section>
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <div><h2 style="font-size:1.5rem;font-weight:800">注目の回復スポット</h2><p style="color:#6b7280;font-size:.88rem;margin-top:4px">大阪エリアの人気店</p></div>
+        <span style="color:#0d9488;font-size:.88rem;font-weight:600;cursor:pointer" onclick="showPage('shops')">すべて見る →</span>
+      </div>
+      <div class="shops-grid" id="home-shops"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="container">
+      <h2>まず、あなたの疲労タイプを知ろう</h2>
+      <p>5つの質問に答えるだけで、AIがあなたに最適な回復手段とおすすめスポットをピックアップします。所要時間は約1分。</p>
+      <button class="btn btn-white btn-lg" onclick="showPage('diagnosis')">🧠 AI疲労診断を始める（無料）→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======== SHOPS ======== -->
+<div id="page-shops" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="page-title"><h1>回復スポットを探す</h1><p>エリア・ジャンルで絞り込んで、最適な施設を見つけよう</p></div>
+    <div class="search-box"><span class="search-icon">🔍</span><input id="shop-search" type="text" placeholder="店舗名・キーワードで検索..." oninput="renderShops()"></div>
+    <div class="filter-row"><div class="filter-label">📍 エリア</div>
+      <div class="filter-chips">
+        <span class="chip active-gray" id="fa-all" onclick="setFilter('area','')">すべて</span>
+        <span class="chip" id="fa-osaka" onclick="setFilter('area','osaka')">大阪</span>
+        <span class="chip" id="fa-tokyo" onclick="setFilter('area','tokyo')">東京</span>
+      </div>
+    </div>
+    <div class="filter-row"><div class="filter-label">ジャンル</div>
+      <div class="filter-chips">
+        <span class="chip active-teal" id="fg-all" onclick="setFilter('genre','')">すべて</span>
+        <span class="chip" id="fg-sauna" onclick="setFilter('genre','sauna')">🔥 サウナ</span>
+        <span class="chip" id="fg-seitai" onclick="setFilter('genre','seitai')">🦴 整体</span>
+        <span class="chip" id="fg-massage" onclick="setFilter('genre','massage')">💆 マッサージ</span>
+        <span class="chip" id="fg-oxygen" onclick="setFilter('genre','oxygen')">🫧 酸素カプセル</span>
+        <span class="chip" id="fg-stretch" onclick="setFilter('genre','stretch')">🧘 ストレッチ</span>
+        <span class="chip" id="fg-bath" onclick="setFilter('genre','bath')">♨️ 岩盤浴</span>
+      </div>
+    </div>
+    <div class="result-count"><span id="shops-count">0</span> 件のスポットが見つかりました</div>
+    <div class="shops-grid" id="shops-grid"></div>
+  </div>
+</div>
+
+<!-- ======== DETAIL ======== -->
+<div id="page-shop-detail" class="page">
+  <div class="container" style="padding-top:28px;padding-bottom:48px;max-width:720px" id="detail-content"></div>
+</div>
+
+<!-- ======== DIAGNOSIS ======== -->
+<div id="page-diagnosis" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="diag-wrap">
+      <div class="diag-header">
+        <div class="diag-icon">🧠</div>
+        <h1>AI疲労診断</h1>
+        <p>5つの質問で最適な回復プランを提案します</p>
+      </div>
+      <div id="diag-steps">
+        <div class="step-bar" id="step-bar"></div>
+        <div class="step-label" id="step-label"></div>
+        <div id="q-card"></div>
+        <div class="step-nav" id="step-nav"></div>
+      </div>
+      <div id="diag-result" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== REGISTER ======== -->
+<div id="page-register" class="page">
+  <div class="container" style="padding-top:32px;padding-bottom:48px">
+    <div class="reg-wrap">
+      <div class="reg-header">
+        <div class="reg-icon">👤</div>
+        <h1>会員登録</h1>
+        <p style="color:#6b7280;font-size:.88rem">無料で始める。今すぐ回復予約。</p>
+      </div>
+      <div id="reg-success" class="success-wrap">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">登録完了！</div>
+        <div class="success-sub" id="reg-email-msg"></div>
+        <button class="btn btn-primary btn-block btn-lg" style="margin-bottom:10px" onclick="showPage('diagnosis')">⚡ AI診断を始める</button>
+        <button class="btn btn-block" style="background:#f3f4f6;color:#374151;padding:14px;border-radius:14px;border:none;cursor:pointer;font-weight:600" onclick="showPage('shops')">スポットを探す</button>
+      </div>
+      <div id="reg-form">
+        <div class="perks-box">
+          <div class="perks-title">会員特典</div>
+          <div class="perk-item">✅ AI疲労診断が何度でも無料</div>
+          <div class="perk-item">✅ お気に入りスポットを保存</div>
+          <div class="perk-item">✅ 回復履歴・体調管理機能</div>
+          <div class="perk-item">✅ 限定クーポン・特別割引</div>
+        </div>
+        <div class="form-card">
+          <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+              <label class="form-label">お名前</label>
+              <input id="reg-name" class="form-input" type="text" placeholder="山田 太郎">
+              <div class="form-err" id="err-name">お名前を入力してください</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">メールアドレス</label>
+              <input id="reg-email" class="form-input" type="email" placeholder="you@example.com">
+              <div class="form-err" id="err-email">有効なメールアドレスを入力してください</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">パスワード</label>
+              <input id="reg-pass" class="form-input" type="password" placeholder="8文字以上" oninput="updateStrength()">
+              <div class="pass-strength" id="pass-strength">
+                <div class="strength-bars" id="s-bars"></div>
+                <div class="strength-txt" id="s-label"></div>
+              </div>
+              <div class="form-err" id="err-pass">パスワードは8文字以上で入力してください</div>
+            </div>
+            <div class="form-terms">登録することで<span>利用規約</span>および<span>プライバシーポリシー</span>に同意したものとみなします。</div>
+            <button type="submit" class="btn btn-primary btn-block" style="padding:16px;font-size:1rem;border-radius:14px">無料で会員登録</button>
+          </form>
+        </div>
+        <p style="text-align:center;font-size:.85rem;color:#6b7280;margin-top:16px">すでにアカウントをお持ちですか？ <span style="color:#0d9488;cursor:pointer;font-weight:600">ログイン</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" onclick="showPage('home')"><div class="logo-icon" style="width:28px;height:28px;font-size:1rem">⚡</div><span style="color:#fff;font-size:1.05rem;font-weight:700">トトナビ</span></div>
+        <p>疲労回復に特化した予約プラットフォーム。<br>AIが最適な回復手段を提案します。</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col"><h4>サービス</h4><ul><li onclick="showPage('shops')">スポット検索</li><li onclick="showPage('diagnosis')">AI疲労診断</li><li onclick="showPage('register')">会員登録</li></ul></div>
+        <div class="footer-col"><h4>ジャンル</h4><ul><li onclick="filterShops('sauna')">サウナ</li><li onclick="filterShops('seitai')">整体</li><li onclick="filterShops('massage')">マッサージ</li><li onclick="filterShops('oxygen')">酸素カプセル</li></ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom container">© 2024 トトナビ. All rights reserved.</div>
+</footer>
+
+<script>
+// ========== DATA ==========
+const SHOPS=[
+  {id:'1',name:'サウナしきじ',genre:'sauna',area:'osaka',addr:'大阪市北区梅田1-1-1',station:'梅田駅 徒歩3分',rating:4.8,cnt:312,price:'¥1,500〜¥2,500',hours:'10:00〜翌2:00',desc:'大阪最高峰のフィンランドサウナ。天然水の水風呂と高温サウナで完全回復。ととのい椅子も完備。',feats:['フィンランドサウナ','天然水水風呂','ととのいスペース','ロウリュ体験'],tags:['サウナ','ロウリュ','水風呂','梅田'],types:['body','stress'],minT:60,img:'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?w=400&q=70'},
+  {id:'2',name:'スパ・アルパ',genre:'sauna',area:'osaka',addr:'大阪市浪速区難波中2-10-70',station:'難波駅 直結',rating:4.6,cnt:256,price:'¥2,000〜¥3,000',hours:'11:00〜翌9:00',desc:'難波直結の大型スパ施設。高温・塩・ミストサウナを完備。館内着付きでゆったり過ごせる。',feats:['高温サウナ','塩サウナ','ミストサウナ','岩盤浴'],tags:['サウナ','24時間','難波','岩盤浴'],types:['body','stress','brain'],minT:120,img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=70'},
+  {id:'3',name:'ニュージャパン梅田',genre:'sauna',area:'osaka',addr:'大阪市北区芝田2-9-20',station:'梅田駅 徒歩5分',rating:4.4,cnt:189,price:'¥1,200〜¥2,000',hours:'24時間営業',desc:'深夜でも利用できる24時間サウナ。仕事帰りにそのままリフレッシュ。',feats:['24時間','フィンランドサウナ','水風呂','仮眠室'],tags:['24時間','サウナ','梅田','仮眠'],types:['stress','brain'],minT:60,img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&q=70'},
+  {id:'4',name:'整体院 からだリセット',genre:'seitai',area:'osaka',addr:'大阪市中央区心斎橋筋2-1-8',station:'心斎橋駅 徒歩2分',rating:4.9,cnt:428,price:'¥3,000〜¥6,000',hours:'10:00〜22:00',desc:'体の歪みを根本から改善。肩こり・腰痛・疲労に特化した整体。初回限定割引あり。',feats:['骨格矯正','筋膜リリース','腰痛特化','女性施術師在籍'],tags:['整体','骨格矯正','肩こり','腰痛'],types:['body'],minT:30,img:'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=400&q=70'},
+  {id:'5',name:'極楽整体 本町院',genre:'seitai',area:'osaka',addr:'大阪市中央区本町2-3-5',station:'本町駅 徒歩1分',rating:4.7,cnt:301,price:'¥4,000〜¥8,000',hours:'09:00〜21:00',desc:'国家資格者による本格整体。デスクワーカー向け頭痛・肩こりコースが人気。',feats:['国家資格者','デスクワーカー特化','頭痛改善','完全個室'],tags:['整体','頭痛','デスクワーカー','本町'],types:['body','brain'],minT:60,img:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=70'},
+  {id:'6',name:'もみほぐし リラクス梅田',genre:'massage',area:'osaka',addr:'大阪市北区梅田3-3-45',station:'梅田駅 徒歩4分',rating:4.5,cnt:512,price:'¥2,500〜¥5,000',hours:'11:00〜23:00',desc:'全身もみほぐしからピンポイントケアまで。コース豊富で自分に合ったマッサージが見つかる。',feats:['全身コース','ピンポイントケア','深夜対応','指名可'],tags:['マッサージ','もみほぐし','梅田','深夜'],types:['body','stress'],minT:30,img:'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=400&q=70'},
+  {id:'7',name:'タイ古式マッサージ SABAI',genre:'massage',area:'osaka',addr:'大阪市中央区南船場4-4-21',station:'四ツ橋駅 徒歩3分',rating:4.8,cnt:267,price:'¥4,000〜¥9,000',hours:'12:00〜22:00',desc:'タイ本場の技術を持つセラピストによる本格タイ古式マッサージ。ストレス解放・深い弛緩を体験。',feats:['タイ古式','本場技術','アロマオイル','カップル可'],tags:['タイ古式','マッサージ','アロマ','四ツ橋'],types:['stress','body'],minT:60,img:'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=70'},
+  {id:'8',name:'リラクゼーション ほぐし庵',genre:'massage',area:'osaka',addr:'大阪市天王寺区上本町6-6-1',station:'上本町駅 直結',rating:4.3,cnt:198,price:'¥1,980〜¥4,500',hours:'10:00〜22:30',desc:'駅直結でアクセス抜群。30分から気軽に利用できるリーズナブルなリラクゼーション。',feats:['30分〜OK','リーズナブル','駅直結','予約不要'],tags:['マッサージ','リーズナブル','上本町','予約不要'],types:['body','stress'],minT:30,img:'https://images.unsplash.com/photo-1591343395082-e120087004b4?w=400&q=70'},
+  {id:'9',name:'酸素カプセル O2ラボ 心斎橋',genre:'oxygen',area:'osaka',addr:'大阪市中央区心斎橋筋1-4-3',station:'心斎橋駅 徒歩1分',rating:4.6,cnt:143,price:'¥2,000〜¥4,000',hours:'10:00〜21:00',desc:'最新型酸素カプセルで脳の疲労回復・集中力アップ。プロアスリートも愛用する高濃度酸素環境。',feats:['高濃度1.3気圧','脳疲労回復','スポーツ後OK','完全個室'],tags:['酸素カプセル','脳疲労','心斎橋','アスリート'],types:['brain','body'],minT:30,img:'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=400&q=70'},
+  {id:'10',name:'酸素BOOST なんば',genre:'oxygen',area:'osaka',addr:'大阪市浪速区難波中1-2-10',station:'難波駅 徒歩2分',rating:4.4,cnt:89,price:'¥1,800〜¥3,500',hours:'09:00〜22:00',desc:'集中力・疲労回復に特化した酸素カプセル専門店。仕事前・後のリフレッシュに最適。',feats:['脳活性化','集中力UP','短時間OK','Wi-Fi完備'],tags:['酸素カプセル','集中力','難波','リフレッシュ'],types:['brain'],minT:30,img:'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=400&q=70'},
+  {id:'11',name:'ストレッチ専門店 NOBIRU 梅田',genre:'stretch',area:'osaka',addr:'大阪市北区茶屋町1-27',station:'梅田駅 徒歩6分',rating:4.7,cnt:224,price:'¥3,500〜¥7,000',hours:'10:00〜22:00',desc:'トレーナーが体の硬さをほぐす完全個別ストレッチ。デスクワーク・運動不足による硬直に効果的。',feats:['個別対応','トレーナー指導','デスクワーカー向け','柔軟性改善'],tags:['ストレッチ','柔軟性','梅田','トレーナー'],types:['body','brain'],minT:60,img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&q=70'},
+  {id:'12',name:'岩盤浴 なにわの湯',genre:'bath',area:'osaka',addr:'大阪市北区長柄西1-7-31',station:'天神橋筋六丁目駅 徒歩5分',rating:4.5,cnt:387,price:'¥800〜¥1,800',hours:'10:00〜翌1:00',desc:'都会にある天然温泉。岩盤浴・露天風呂・サウナを完備。仕事帰りのデイリーケアに最適。',feats:['天然温泉','岩盤浴','露天風呂','リーズナブル'],tags:['岩盤浴','温泉','天六','デイリーケア'],types:['stress','body'],minT:60,img:'https://images.unsplash.com/photo-1555005036-2f67c8a0a473?w=400&q=70'},
+  {id:'13',name:'サウナ東京',genre:'sauna',area:'tokyo',addr:'東京都千代田区神田錦町2-2-1',station:'大手町駅 徒歩5分',rating:4.9,cnt:621,price:'¥2,800〜¥4,500',hours:'06:00〜23:00',desc:'都内最高峰のサウナ体験。フィンランド式・ドライ・ミスト3種のサウナと天然水水風呂。',feats:['3種サウナ','天然水水風呂','朝サウナ','ラウンジ完備'],tags:['サウナ','フィンランド式','大手町','朝活'],types:['body','stress','brain'],minT:60,img:'https://images.unsplash.com/photo-1613069816-6af39620ae75?w=400&q=70'},
+  {id:'14',name:'整体 Back Style 新宿',genre:'seitai',area:'tokyo',addr:'東京都新宿区新宿3-17-5',station:'新宿駅 徒歩3分',rating:4.6,cnt:345,price:'¥5,000〜¥10,000',hours:'10:00〜22:00',desc:'慢性的な肩こり・腰痛・疲労を根本改善。完全予約制のプレミアム整体院。',feats:['完全予約制','根本改善','腰痛専門','プレミアム'],tags:['整体','新宿','腰痛','予約制'],types:['body'],minT:60,img:'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=70'},
+];
+const GL={sauna:'サウナ',seitai:'整体',massage:'マッサージ',oxygen:'酸素カプセル',stretch:'ストレッチ',bath:'岩盤浴'};
+const GI={sauna:'🔥',seitai:'🦴',massage:'💆',oxygen:'🫧',stretch:'🧘',bath:'♨️'};
+
+// ========== NAV ==========
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='shops') renderShops();
+  if(id==='home') renderHomeShops();
+  if(id==='diagnosis'){diagStep=1;diagAns={};renderDiag();}
+}
+function filterShops(g){
+  filt.genre=g; filt.area='';
+  showPage('shops'); updateChips();
+}
+function toggleMobileMenu(){document.getElementById('mobile-menu').classList.toggle('open');}
+function closeMobileMenu(){document.getElementById('mobile-menu').classList.remove('open');}
+
+// ========== SHOP CARD ==========
+function stars(r){return[1,2,3,4,5].map(i=>`<span class="star${i<=Math.round(r)?' on':''}">★</span>`).join('')}
+function shopCard(s,hl=false){
+  return`<div class="shop-card${hl?' highlight':''}" onclick="showDetail('${s.id}')">
+    <div class="shop-img">
+      <img src="${s.img}" alt="${s.name}" onerror="this.style.display='none'" loading="lazy">
+      <div class="shop-genre-badge">${GI[s.genre]} ${GL[s.genre]}</div>
+      ${hl?'<div class="shop-ai-badge">AIおすすめ</div>':''}
+    </div>
+    <div class="shop-body">
+      <div class="shop-name">${s.name}</div>
+      <div class="stars">${stars(s.rating)}<span class="rating-num">${s.rating}</span><span class="rating-cnt">(${s.cnt}件)</span></div>
+      <div class="shop-meta">
+        <div>📍 <span>${s.station}</span> <a href="https://www.google.com/maps/search/${encodeURIComponent(s.name+' '+s.addr)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:#0d9488;font-size:.75rem;font-weight:600;margin-left:4px">地図▶</a></div>
+        <div>🕐 <span>${s.hours}</span></div>
+      </div>
+      <div class="shop-price">${s.price}</div>
+      <div class="tags">${s.feats.slice(0,3).map(f=>`<span class="tag">${f}</span>`).join('')}</div>
+      <div class="shop-btns">
+        <button class="shop-btn-detail" onclick="event.stopPropagation();showDetail('${s.id}')">詳細を見る</button>
+        <button class="shop-btn-book" onclick="event.stopPropagation();alert('予約ページへ移動します（デモ）')">予約する 🔗</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ========== HOME SHOPS ==========
+function renderHomeShops(){
+  document.getElementById('home-shops').innerHTML=SHOPS.filter(s=>s.area==='osaka').slice(0,3).map(s=>shopCard(s)).join('');
+}
+
+// ========== SHOPS PAGE ==========
+const filt={area:'',genre:''};
+function setFilter(t,v){filt[t]=v;updateChips();renderShops();}
+function updateChips(){
+  ['all','osaka','tokyo'].forEach(v=>{
+    const el=document.getElementById('fa-'+v);
+    if(!el)return;
+    const active=(v==='all'&&filt.area==='')||(v===filt.area);
+    el.className='chip'+(active?' active-gray':'');
+  });
+  ['all','sauna','seitai','massage','oxygen','stretch','bath'].forEach(v=>{
+    const el=document.getElementById('fg-'+v);
+    if(!el)return;
+    const active=(v==='all'&&filt.genre==='')||(v===filt.genre);
+    el.className='chip'+(active?' active-teal':'');
+  });
+}
+function renderShops(){
+  const kw=(document.getElementById('shop-search')?.value||'').toLowerCase();
+  const res=SHOPS.filter(s=>{
+    if(filt.area&&s.area!==filt.area)return false;
+    if(filt.genre&&s.genre!==filt.genre)return false;
+    if(kw&&!s.name.toLowerCase().includes(kw)&&!s.tags.some(t=>t.includes(kw))&&!s.desc.includes(kw))return false;
+    return true;
+  }).sort((a,b)=>b.rating-a.rating);
+  document.getElementById('shops-count').textContent=res.length;
+  document.getElementById('shops-grid').innerHTML=res.length?res.map(s=>shopCard(s)).join(''):'<div style="grid-column:1/-1;text-align:center;padding:60px 0"><div style="font-size:2.5rem;margin-bottom:12px">🔍</div><p style="color:#6b7280">条件に合うスポットが見つかりませんでした</p></div>';
+}
+
+// ========== DETAIL ==========
+function showDetail(id){
+  const s=SHOPS.find(x=>x.id===id);
+  if(!s)return;
+  const rel=SHOPS.filter(x=>x.genre===s.genre&&x.id!==id).slice(0,3);
+  document.getElementById('detail-content').innerHTML=`
+    <div class="back-link" onclick="history.back()||showPage('shops')">← スポット一覧に戻る</div>
+    <div class="detail-img"><img src="${s.img}" alt="${s.name}" onerror="this.style.display='none'"><div class="shop-genre-badge">${GI[s.genre]} ${GL[s.genre]}</div></div>
+    <div class="detail-card">
+      <div class="detail-title">${s.name}</div>
+      <div class="detail-stars">${stars(s.rating)}<span class="rating-num" style="font-size:1rem">${s.rating}</span><span class="rating-cnt">(${s.cnt}件のレビュー)</span></div>
+      <div class="detail-meta">
+        <div>📍<div>${s.addr}<br><span style="color:#0d9488;font-weight:600">${s.station}</span></div></div>
+        <div>🕐<span>${s.hours}</span></div>
+      </div>
+      <div class="price-box"><div class="price-label">料金目安</div><div class="price-val">${s.price}</div></div>
+      <div class="desc-text">${s.desc}</div>
+      <div style="font-weight:700;margin-bottom:10px">施設の特徴</div>
+      <div class="features-list">${s.feats.map(f=>`<div class="feature-item">✅ ${f}</div>`).join('')}</div>
+      <div class="shop-tags">${s.tags.map(t=>`<span class="shop-tag">#${t}</span>`).join('')}</div>
+      <a href="https://www.google.com/maps/search/${encodeURIComponent(s.name+' '+s.addr)}" target="_blank" rel="noopener" class="map-btn">🗺️ Googleマップで見る</a>
+      <button class="book-btn" onclick="alert('予約ページへ移動します（デモ）')">🔗 今すぐ予約する</button>
+      <div class="book-note">外部予約サイトに移動します</div>
+    </div>
+    <div class="ai-cta-box">
+      <h3>このスポットは本当に自分に合ってる？</h3>
+      <p>AI診断でより精度の高い回復プランを見つけましょう</p>
+      <button class="ai-cta-btn" onclick="showPage('diagnosis')">🧠 AI疲労診断を受ける →</button>
+    </div>
+    ${rel.length?`<div style="font-size:1.1rem;font-weight:800;margin-bottom:14px">${GL[s.genre]}の他のスポット</div><div class="shops-grid">${rel.map(x=>shopCard(x)).join('')}</div>`:''}
+  `;
+  showPage('shop-detail');
+}
+
+// ========== DIAGNOSIS ==========
+const QS=[
+  {key:'fatigueLevel',title:'現在の疲労レベルは？',sub:'1（ほぼ元気）〜 5（ぐったり）で教えてください',type:'level'},
+  {key:'fatigueType',title:'疲労のタイプは？',sub:'最も当てはまるものを選んでください',type:'choice',opts:[
+    {v:'body',icon:'💪',label:'身体的疲労',desc:'筋肉痛・体の重さ・肩こり・腰痛'},
+    {v:'brain',icon:'🧠',label:'脳疲労',desc:'集中できない・考えがまとまらない'},
+    {v:'stress',icon:'😮‍💨',label:'ストレス疲労',desc:'イライラ・不安・気分が落ちている'},
+  ]},
+  {key:'sleepQuality',title:'最近の睡眠の質は？',sub:'ここ1週間を振り返って',type:'choice',opts:[
+    {v:'good',icon:'😴',label:'よく眠れている',desc:'7時間以上・スッキリ目覚める'},
+    {v:'normal',icon:'😐',label:'まあまあ',desc:'5〜7時間・少し眠い'},
+    {v:'bad',icon:'😵',label:'あまり眠れていない',desc:'5時間未満・疲れが取れない'},
+  ]},
+  {key:'availableTime',title:'今使える時間は？',sub:'移動時間を除いたおおよその目安',type:'grid',opts:[
+    {v:30,icon:'⚡',label:'30分',desc:'スキマ時間に'},
+    {v:60,icon:'⏱️',label:'1時間',desc:'しっかり回復'},
+    {v:120,icon:'🕰️',label:'2時間+',desc:'完全リカバリー'},
+  ]},
+  {key:'budget',title:'予算の目安は？',sub:'1回あたりのご予算',type:'choice',opts:[
+    {v:'low',icon:'💚',label:'〜¥2,000',desc:'リーズナブルに気軽に通いたい'},
+    {v:'medium',icon:'💛',label:'¥2,000〜¥5,000',desc:'ほどよくしっかりケアしたい'},
+    {v:'high',icon:'❤️',label:'¥5,000〜',desc:'効果重視でプレミアムなケアを'},
+  ]},
+];
+let diagStep=1,diagAns={};
+
+function renderDiag(){
+  const q=QS[diagStep-1];
+  // ステップバー
+  let bar='';
+  QS.forEach((_,i)=>{
+    const n=i+1,done=diagStep>n,cur=diagStep===n;
+    bar+=`<div class="step-circle ${done?'step-done':cur?'step-cur':'step-todo'}">${done?'✓':n}</div>`;
+    if(i<QS.length-1) bar+=`<div class="step-line ${done?'done':'todo'}"></div>`;
+  });
+  document.getElementById('step-bar').innerHTML=bar;
+  document.getElementById('step-label').textContent=`ステップ ${diagStep} / 5：${['疲労レベル','疲労タイプ','睡眠の質','利用可能時間','予算'][diagStep-1]}`;
+
+  // 質問
+  let qh=`<div class="q-title">${q.title}</div><div class="q-sub">${q.sub}</div>`;
+  if(q.type==='level'){
+    qh+=`<div class="level-btns">${[1,2,3,4,5].map(i=>`<button class="level-btn${diagAns.fatigueLevel===i?' sel':''}" onclick="pick('fatigueLevel',${i})">${i}</button>`).join('')}</div>`;
+    qh+=`<div class="level-hint"><span>ほぼ元気</span><span>ぐったり</span></div>`;
+    if(diagAns.fatigueLevel) qh+=`<div class="sel-msg">疲労レベル${diagAns.fatigueLevel} ${diagAns.fatigueLevel>=4?'😫':diagAns.fatigueLevel>=3?'😮‍💨':'😊'}</div>`;
+  } else if(q.type==='choice'){
+    qh+=`<div class="choice-list">${q.opts.map(o=>`<button class="choice-btn${diagAns[q.key]===o.v?' sel':''}" onclick="pick('${q.key}','${o.v}')"><span class="choice-icon">${o.icon}</span><div><div class="choice-label">${o.label}</div><div class="choice-desc">${o.desc}</div></div>${diagAns[q.key]===o.v?'<span class="check-mark">✅</span>':''}</button>`).join('')}</div>`;
+  } else if(q.type==='grid'){
+    qh+=`<div class="time-grid">${q.opts.map(o=>`<button class="time-btn${diagAns[q.key]===o.v?' sel':''}" onclick="pick('${q.key}',${o.v})"><div class="time-icon">${o.icon}</div><div class="time-label">${o.label}</div><div class="time-desc">${o.desc}</div></button>`).join('')}</div>`;
+  }
+  document.getElementById('q-card').innerHTML=qh;
+
+  // ナビ
+  const ok=diagAns[q.key]!==undefined;
+  document.getElementById('step-nav').innerHTML=`
+    ${diagStep>1?`<button class="back-btn" onclick="diagBack()">← 戻る</button>`:''}
+    <button class="next-btn ${ok?'next-on':'next-off'}" onclick="diagNext()" ${ok?'':'disabled'}>
+      ${diagStep===5?'⚡ 診断結果を見る':'次へ →'}
+    </button>`;
+}
+function pick(k,v){diagAns[k]=v;renderDiag();}
+function diagBack(){if(diagStep>1){diagStep--;renderDiag();}}
+function diagNext(){
+  if(diagAns[QS[diagStep-1].key]===undefined)return;
+  if(diagStep<5){diagStep++;renderDiag();}else showResult();
+}
+function showResult(){
+  const {fatigueLevel:fl,fatigueType:ft,sleepQuality:sq,availableTime:at,budget:bd}=diagAns;
+  let genres=[];
+  if(ft==='body') genres=at>=60?['sauna','massage','seitai']:['massage','stretch'];
+  if(ft==='brain') genres=['oxygen','sauna','stretch'];
+  if(ft==='stress') genres=['sauna','massage','bath'];
+  if(sq==='bad'&&!genres.includes('bath')) genres.push('bath');
+  genres=[...new Set(genres)].slice(0,3);
+  const score=Math.min(95,Math.max(40,100-fl*12+(sq==='good'?10:sq==='bad'?-10:0)+20));
+  const ftxt={body:'身体的疲労',brain:'脳疲労',stress:'ストレス疲労'}[ft];
+  const tips={
+    body:['筋肉疲労には血行促進が効果的。サウナ後の水風呂でさらに回復が加速します。','施術後は十分な水分補給を忘れずに。'],
+    brain:['脳疲労には酸素カプセルが特に有効。高濃度酸素で脳のパフォーマンスが回復します。','デジタルデトックスとして施術中はスマホを手放してみましょう。'],
+    stress:['ストレス性疲労には「ととのい」が最適。サウナ→水風呂→外気浴のサイクルが効果的です。','タイ古式マッサージもストレス解消に非常に効果的です。'],
+  }[ft];
+  const rec=SHOPS.filter(s=>genres.includes(s.genre)&&s.types.includes(ft)&&s.minT<=at).sort((a,b)=>b.rating-a.rating).slice(0,3);
+
+  document.getElementById('diag-steps').style.display='none';
+  const r=document.getElementById('diag-result');
+  r.style.display='block';
+  r.innerHTML=`<div class="fade-in">
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:3rem;margin-bottom:10px">✅</div>
+      <h2 style="font-size:1.4rem;font-weight:800;margin-bottom:4px">診断完了！</h2>
+      <p style="color:#6b7280;font-size:.88rem">あなたに最適な回復プランが見つかりました</p>
+    </div>
+    <div class="score-card">
+      <div class="score-row">
+        <div><div class="score-sub">現在の回復スコア</div><div class="score-num">${score}%</div></div>
+        <div><div class="score-sub" style="text-align:right">今日のおすすめ</div><div class="genre-chips">${genres.map(g=>`<span class="genre-chip">${GL[g]}</span>`).join('')}</div></div>
+      </div>
+      <div class="score-bar-bg"><div class="score-bar-fill" id="sbar" style="width:0%"></div></div>
+      <div class="score-hint">適切なケアで満点回復を目指しましょう</div>
+    </div>
+    <div class="msg-card">
+      <div class="msg-title">🧠 AIからのメッセージ</div>
+      <div class="msg-text">あなたの疲労状態は「${ftxt}」が主な原因です。疲労レベル${fl}/5の状態から回復するために、${genres.map(g=>GL[g]).join('・')}を${at}分以内で体験することをおすすめします。適切なケアで回復スコアは${score}%まで回復が見込まれます。</div>
+    </div>
+    <div class="tips-box">
+      <div class="tips-title">回復のポイント</div>
+      ${tips.map(t=>`<div class="tip-item"><span>⚡</span><span>${t}</span></div>`).join('')}
+    </div>
+    ${rec.length?`<div class="rec-title">あなたにおすすめのスポット</div><div class="shops-grid">${rec.map((s,i)=>shopCard(s,i===0)).join('')}</div>`:''}
+    <div class="retry-link"><button onclick="diagStep=1;diagAns={};document.getElementById('diag-steps').style.display='';document.getElementById('diag-result').style.display='none';renderDiag()">もう一度診断する</button></div>
+  </div>`;
+  setTimeout(()=>{const b=document.getElementById('sbar');if(b)b.style.width=score+'%';},100);
+}
+
+// ========== REGISTER ==========
+function handleRegister(e){
+  e.preventDefault();
+  const n=document.getElementById('reg-name').value;
+  const em=document.getElementById('reg-email').value;
+  const pw=document.getElementById('reg-pass').value;
+  let ok=true;
+  if(!n.trim()){document.getElementById('err-name').classList.add('show');document.getElementById('reg-name').classList.add('err');ok=false;}else{document.getElementById('err-name').classList.remove('show');document.getElementById('reg-name').classList.remove('err');}
+  if(!em.includes('@')){document.getElementById('err-email').classList.add('show');document.getElementById('reg-email').classList.add('err');ok=false;}else{document.getElementById('err-email').classList.remove('show');document.getElementById('reg-email').classList.remove('err');}
+  if(pw.length<8){document.getElementById('err-pass').classList.add('show');document.getElementById('reg-pass').classList.add('err');ok=false;}else{document.getElementById('err-pass').classList.remove('show');document.getElementById('reg-pass').classList.remove('err');}
+  if(!ok)return;
+  document.getElementById('reg-email-msg').textContent=em+' に確認メールを送信しました。メール内のリンクをクリックして登録を完了させてください。';
+  document.getElementById('reg-form').style.display='none';
+  document.getElementById('reg-success').style.display='block';
+}
+function updateStrength(){
+  const pw=document.getElementById('reg-pass').value;
+  const wrap=document.getElementById('pass-strength');
+  if(!pw){wrap.classList.remove('show');return;}
+  wrap.classList.add('show');
+  const s=pw.length>=12?4:pw.length>=8?3:pw.length>=5?2:1;
+  const cols=['#ef4444','#f97316','#eab308','#14b8a6'];
+  const labs=['弱い','まあまあ','良い','強い'];
+  document.getElementById('s-bars').innerHTML=[1,2,3,4].map(i=>`<div class="sbar" style="background:${i<=s?cols[s-1]:'#e5e7eb'}"></div>`).join('');
+  document.getElementById('s-label').textContent=labs[s-1];
+}
+
+// ========== INIT ==========
+renderHomeShops();
+</script>
+</body>
+</html>
