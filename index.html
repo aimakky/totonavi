@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>トトナビ | 疲労回復に特化した予約プラットフォーム</title>
+<meta name="description" content="疲れたら、すぐ回復。AIが疲労を診断し、あなたに最適なサウナ・整体・マッサージ・酸素カプセルを提案。そのまま予約まで完結できる回復専門サービス。">
+<meta name="keywords" content="疲労回復,サウナ,整体,マッサージ,酸素カプセル,予約,大阪,東京">
+<meta property="og:title" content="トトナビ | 疲労回復に特化した予約プラットフォーム">
+<meta property="og:description" content="疲れたら、すぐ回復。AIが最適な回復スポットを提案します。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://totonavi.jp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Hiragino Sans','Meiryo',sans-serif}
 body{background:#f8fafc;color:#111827;min-height:100vh;display:flex;flex-direction:column}
@@ -89,6 +97,40 @@ section{padding:56px 0}
 .shop-btn-detail:hover{background:#e5e7eb}
 .shop-btn-book{flex:1;background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff;border:none;border-radius:10px;padding:9px;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:4px}
 .shop-btn-book:hover{opacity:.9}
+/* ---- HEART / FAVORITE ---- */
+.heart-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.1);z-index:2}
+.heart-btn:hover{transform:scale(1.15)}
+.heart-btn.liked{background:#fff0f3;color:#e11d48}
+/* ---- OPEN BADGE ---- */
+.open-badge{position:absolute;bottom:10px;left:10px;padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:700}
+.open-badge.open{background:#dcfce7;color:#16a34a}
+.open-badge.closed{background:#fee2e2;color:#dc2626}
+/* ---- SCROLL ANIMATION ---- */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+/* ---- TESTIMONIALS ---- */
+.testimonials-grid{display:grid;gap:16px}
+@media(min-width:640px){.testimonials-grid{grid-template-columns:repeat(3,1fr)}}
+.testimonial-card{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e7eb;position:relative}
+.testimonial-card::before{content:'"';font-size:3rem;color:#ccfbf1;line-height:1;position:absolute;top:12px;left:16px;font-family:Georgia,serif}
+.testimonial-text{font-size:.88rem;color:#4b5563;line-height:1.7;margin-bottom:14px;margin-top:20px}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.testimonial-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:#f0fdfa}
+.testimonial-name{font-weight:700;font-size:.85rem;color:#111827}
+.testimonial-sub{font-size:.75rem;color:#9ca3af}
+.testimonial-stars{color:#facc15;font-size:.8rem;margin-bottom:4px}
+/* ---- LOADING ---- */
+#loading-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0d9488,#1d4ed8);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s ease}
+#loading-screen.hide{opacity:0;pointer-events:none}
+.loading-logo{font-size:3rem;margin-bottom:12px;animation:pulse 1s infinite}
+.loading-text{color:#fff;font-size:1.2rem;font-weight:700;margin-bottom:24px}
+.loading-bar{width:200px;height:4px;background:rgba(255,255,255,.3);border-radius:99px;overflow:hidden}
+.loading-fill{height:100%;background:#fff;border-radius:99px;animation:load 1.2s ease forwards}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+@keyframes load{from{width:0}to{width:100%}}
+/* ---- SHARE BTN ---- */
+.share-btn{display:flex;align-items:center;gap:8px;background:#f0fdf4;color:#16a34a;border:1.5px solid #bbf7d0;border-radius:12px;padding:10px 16px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;width:100%;justify-content:center;margin-bottom:10px}
+.share-btn:hover{background:#dcfce7}
 /* ---- CTA ---- */
 .cta{background:linear-gradient(135deg,#0d9488,#2563eb);color:#fff;text-align:center;padding:60px 0}
 .cta h2{font-size:1.6rem;font-weight:800;margin-bottom:14px}
@@ -257,6 +299,12 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
 </style>
 </head>
 <body>
+<!-- ローディング -->
+<div id="loading-screen">
+  <div class="loading-logo">⚡</div>
+  <div class="loading-text">トトナビ</div>
+  <div class="loading-bar"><div class="loading-fill"></div></div>
+</div>
 
 <!-- HEADER -->
 <header>
@@ -269,6 +317,7 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
       <span class="nav-link" onclick="showPage('shops')">スポット検索</span>
       <span class="nav-link" onclick="showPage('diagnosis')">AI診断</span>
       <span class="nav-link" onclick="showPage('register')">会員登録</span>
+      <span class="nav-link" onclick="showPage('contact')" style="color:#0d9488;font-weight:700">店舗掲載</span>
       <button class="btn btn-primary" onclick="showPage('diagnosis')">⚡ 今すぐ回復予約</button>
     </nav>
     <button class="mobile-menu-btn" onclick="toggleMobileMenu()" id="mob-btn">☰</button>
@@ -277,6 +326,7 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
     <span class="nav-link" onclick="showPage('shops');closeMobileMenu()">スポット検索</span>
     <span class="nav-link" onclick="showPage('diagnosis');closeMobileMenu()">AI診断</span>
     <span class="nav-link" onclick="showPage('register');closeMobileMenu()">会員登録</span>
+    <span class="nav-link" onclick="showPage('contact');closeMobileMenu()">🏪 店舗掲載（無料）</span>
     <button class="btn btn-primary btn-block" onclick="showPage('diagnosis');closeMobileMenu()">⚡ 今すぐ回復予約</button>
   </div>
 </header>
@@ -346,6 +396,51 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         <span style="color:#0d9488;font-size:.88rem;font-weight:600;cursor:pointer" onclick="showPage('shops')">すべて見る →</span>
       </div>
       <div class="shops-grid" id="home-shops"></div>
+    </div>
+  </section>
+
+  <!-- お客様の声 -->
+  <section style="background:#f8fafc">
+    <div class="container">
+      <div class="section-title fade-up">
+        <h2>利用者の声</h2>
+        <p>トトナビで回復した方々のリアルな声</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">AI診断で「脳疲労」と判定されてサウナを勧められました。半信半疑でしたが、行った後の頭のスッキリ感が段違い！翌日の仕事効率が上がりました。</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">👨</div>
+            <div>
+              <div class="testimonial-name">田中 誠さん（32歳）</div>
+              <div class="testimonial-sub">IT企業 / 営業職</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">肩こりと腰痛がひどくて整体を探していたら、トトナビで評価順に表示してくれて即決。初回割引もあって2,000円お得でした。次回も絶対使います。</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">👩</div>
+            <div>
+              <div class="testimonial-name">山本 彩さん（28歳）</div>
+              <div class="testimonial-sub">デスクワーカー</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★☆</div>
+          <p class="testimonial-text">仕事終わりに30分だけ使える時間があって、近くでできる回復手段を探したらもみほぐしを提案してくれました。予算内でぴったり！すごく楽になりました。</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">🧑</div>
+            <div>
+              <div class="testimonial-name">中村 健太さん（40歳）</div>
+              <div class="testimonial-sub">飲食業 / 立ち仕事</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -643,12 +738,40 @@ function closeMobileMenu(){document.getElementById('mobile-menu').classList.remo
 
 // ========== SHOP CARD ==========
 function stars(r){return[1,2,3,4,5].map(i=>`<span class="star${i<=Math.round(r)?' on':''}">★</span>`).join('')}
+function isOpen(hours){
+  try{
+    const now=new Date();
+    const h=now.getHours();
+    if(hours.includes('24時間'))return true;
+    const m=hours.match(/(\d+):(\d+)[〜~](?:翌)?(\d+):(\d+)/);
+    if(!m)return true;
+    const open=parseInt(m[1]),close=parseInt(m[3]);
+    if(close<open)return h>=open||h<close;
+    return h>=open&&h<close;
+  }catch{return true;}
+}
+function toggleFav(id,e){
+  e.stopPropagation();
+  const favs=JSON.parse(localStorage.getItem('toto-favs')||'[]');
+  const idx=favs.indexOf(id);
+  if(idx>=0)favs.splice(idx,1);else favs.push(id);
+  localStorage.setItem('toto-favs',JSON.stringify(favs));
+  document.querySelectorAll(`.heart-btn[data-id="${id}"]`).forEach(btn=>{
+    btn.classList.toggle('liked',favs.includes(id));
+    btn.textContent=favs.includes(id)?'❤️':'🤍';
+  });
+}
 function shopCard(s,hl=false){
+  const favs=JSON.parse(localStorage.getItem('toto-favs')||'[]');
+  const liked=favs.includes(s.id);
+  const open=isOpen(s.hours);
   return`<div class="shop-card${hl?' highlight':''}" onclick="showDetail('${s.id}')">
     <div class="shop-img">
       <img src="${s.img}" alt="${s.name}" onerror="this.style.display='none'" loading="lazy">
       <div class="shop-genre-badge">${GI[s.genre]} ${GL[s.genre]}</div>
       ${hl?'<div class="shop-ai-badge">AIおすすめ</div>':''}
+      <button class="heart-btn${liked?' liked':''}" data-id="${s.id}" onclick="toggleFav('${s.id}',event)">${liked?'❤️':'🤍'}</button>
+      <div class="open-badge ${open?'open':'closed'}">${open?'● 営業中':'● 営業時間外'}</div>
     </div>
     <div class="shop-body">
       <div class="shop-name">${s.name}</div>
@@ -848,6 +971,7 @@ function showResult(){
       <div style="font-size:.82rem;color:#6b7280;margin-bottom:14px">予約はお電話が一番早い！</div>
       ${rec.length?`<a href="tel:" onclick="alert('実際の店舗電話番号に繋がります（デモ）')" class="btn btn-primary btn-block" style="text-decoration:none;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px">📞 ${rec[0].name}に電話する</a>`:''}
     </div>
+    <button class="share-btn" onclick="shareResult(${score})">🔗 診断結果をシェアする</button>
     <div class="retry-link"><button onclick="diagStep=1;diagAns={};document.getElementById('diag-steps').style.display='';document.getElementById('diag-result').style.display='none';renderDiag()">もう一度診断する</button></div>
   </div>`;
   setTimeout(()=>{const b=document.getElementById('sbar');if(b)b.style.width=score+'%';},100);
@@ -894,7 +1018,33 @@ function handleContact(e){
   window.scrollTo(0,0);
 }
 
+// ========== SHARE ==========
+function shareResult(score){
+  const text=`トトナビのAI疲労診断を受けました！\n現在の回復スコア：${score}%\n\n疲れたら、すぐ回復。\nhttps://totonavi.jp`;
+  if(navigator.share){
+    navigator.share({title:'トトナビ 疲労診断結果',text,url:'https://totonavi.jp'}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text).then(()=>alert('コピーしました！SNSに貼り付けてシェアしてください📱')).catch(()=>{
+      prompt('このテキストをコピーしてください：',text);
+    });
+  }
+}
+
 // ========== INIT ==========
+// ローディング
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const ls=document.getElementById('loading-screen');
+    if(ls){ls.classList.add('hide');setTimeout(()=>ls.remove(),600);}
+  },1300);
+});
+
+// スクロールアニメーション
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
 renderHomeShops();
 </script>
 </body>
