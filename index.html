@@ -283,6 +283,7 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
 .footer-col li:hover{color:#14b8a6}
 .footer-bottom{border-top:1px solid #1f2937;padding:20px 0;text-align:center;font-size:.78rem}
 /* ---- RESPONSIVE ---- */
+@media(min-width:640px){.stats-numbers{grid-template-columns:repeat(4,1fr)!important}}
 @media(max-width:640px){
   nav{display:none}
   .mobile-menu-btn{display:flex!important}
@@ -338,11 +339,11 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
     <div class="hero-blob1"></div>
     <div class="hero-blob2"></div>
     <div class="container" style="position:relative">
-      <div class="hero-badge">⚡ 疲労回復に特化したプラットフォーム</div>
-      <h1>疲れたら、<br class="sp-br"/>
-        <span>すぐ回復。</span>
+      <div class="hero-badge">🏆 日本初・回復特化プラットフォーム</div>
+      <h1>今すぐ、<br/>
+        <span>疲れを手放せ。</span>
       </h1>
-      <p>AIが疲労を診断し、最適なサウナ・整体・マッサージ・酸素カプセルを提案。そのまま予約まで完結できる、回復のための専門サービス。</p>
+      <p>ホットペッパーに回復特化カテゴリはない。サウナ・整体・マッサージ・酸素カプセルを<strong style="color:#99f6e4">AIが診断して最適提案</strong>。予約まで1分。</p>
       <div class="hero-btns">
         <button class="btn btn-white btn-lg" onclick="showPage('diagnosis')">🧠 AI診断を始める（無料）→</button>
         <button class="btn btn-outline btn-lg" onclick="showPage('shops')">スポットを探す</button>
@@ -351,9 +352,65 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         <span>⭐ 掲載店舗 200+</span>
         <span>❤️ 月間利用者 10,000+</span>
         <span>⚡ AI診断 30,000+件</span>
+        <span>🆚 ホットペッパーに回復専門カテゴリなし</span>
       </div>
     </div>
   </div>
+
+  <!-- 競合比較 -->
+  <section style="background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:48px 0">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(20,184,166,.2);color:#5eead4;padding:6px 16px;border-radius:99px;font-size:.85rem;font-weight:600;margin-bottom:16px">🆚 他サービスとの違い</div>
+        <h2 style="font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:8px">なぜトトナビなのか</h2>
+        <p style="color:#94a3b8;font-size:.9rem">既存サービスにはない「回復特化」の強み</p>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;background:rgba(255,255,255,.05);border-radius:16px;overflow:hidden">
+          <thead>
+            <tr style="background:rgba(20,184,166,.2)">
+              <th style="padding:14px 16px;text-align:left;font-size:.85rem;color:#5eead4">機能</th>
+              <th style="padding:14px 16px;text-align:center;font-size:.85rem;color:#5eead4">トトナビ</th>
+              <th style="padding:14px 16px;text-align:center;font-size:.85rem;color:#94a3b8">ホットペッパー</th>
+              <th style="padding:14px 16px;text-align:center;font-size:.85rem;color:#94a3b8">EPARK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-top:1px solid rgba(255,255,255,.08)">
+              <td style="padding:12px 16px;font-size:.85rem;color:#e2e8f0">AI疲労診断</td>
+              <td style="padding:12px 16px;text-align:center;color:#4ade80;font-weight:700">✅ あり</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ なし</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ なし</td>
+            </tr>
+            <tr style="border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)">
+              <td style="padding:12px 16px;font-size:.85rem;color:#e2e8f0">回復特化カテゴリ</td>
+              <td style="padding:12px 16px;text-align:center;color:#4ade80;font-weight:700">✅ 完全特化</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ 美容・飲食メイン</td>
+              <td style="padding:12px 16px;text-align:center;color:#fbbf24">△ 一部のみ</td>
+            </tr>
+            <tr style="border-top:1px solid rgba(255,255,255,.08)">
+              <td style="padding:12px 16px;font-size:.85rem;color:#e2e8f0">最適スポット提案</td>
+              <td style="padding:12px 16px;text-align:center;color:#4ade80;font-weight:700">✅ AI自動提案</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ 自分で探す</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ 自分で探す</td>
+            </tr>
+            <tr style="border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)">
+              <td style="padding:12px 16px;font-size:.85rem;color:#e2e8f0">疲労スコア可視化</td>
+              <td style="padding:12px 16px;text-align:center;color:#4ade80;font-weight:700">✅ あり</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ なし</td>
+              <td style="padding:12px 16px;text-align:center;color:#f87171">❌ なし</td>
+            </tr>
+            <tr style="border-top:1px solid rgba(255,255,255,.08)">
+              <td style="padding:12px 16px;font-size:.85rem;color:#e2e8f0">サウナ・酸素カプセル対応</td>
+              <td style="padding:12px 16px;text-align:center;color:#4ade80;font-weight:700">✅ 完全対応</td>
+              <td style="padding:12px 16px;text-align:center;color:#fbbf24">△ 一部のみ</td>
+              <td style="padding:12px 16px;text-align:center;color:#fbbf24">△ 一部のみ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
   <!-- ジャンル -->
   <section>
@@ -363,12 +420,12 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         <p>ジャンルを選んで最適なスポットを見つけよう</p>
       </div>
       <div class="genre-grid">
-        <div class="genre-card" onclick="filterShops('sauna')"><div class="genre-icon">🔥</div><h3>サウナ</h3><p>ととのう体験で深いリラックス</p><span class="genre-arrow">→</span></div>
-        <div class="genre-card" onclick="filterShops('seitai')"><div class="genre-icon">🦴</div><h3>整体</h3><p>体の歪みを根本から改善</p><span class="genre-arrow">→</span></div>
-        <div class="genre-card" onclick="filterShops('massage')"><div class="genre-icon">💆</div><h3>マッサージ</h3><p>筋肉の緊張をほぐす</p><span class="genre-arrow">→</span></div>
-        <div class="genre-card" onclick="filterShops('oxygen')"><div class="genre-icon">🫧</div><h3>酸素カプセル</h3><p>脳疲労・集中力回復に</p><span class="genre-arrow">→</span></div>
-        <div class="genre-card" onclick="filterShops('stretch')"><div class="genre-icon">🧘</div><h3>ストレッチ</h3><p>体の硬さ・姿勢を改善</p><span class="genre-arrow">→</span></div>
-        <div class="genre-card" onclick="filterShops('bath')"><div class="genre-icon">♨️</div><h3>岩盤浴</h3><p>じっくり温めてデトックス</p><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('sauna')"><div class="genre-icon">🔥</div><h3>サウナ</h3><p>ととのう体験で深いリラックス</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 6件掲載中</div><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('seitai')"><div class="genre-icon">🦴</div><h3>整体</h3><p>体の歪みを根本から改善</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 2件掲載中</div><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('massage')"><div class="genre-icon">💆</div><h3>マッサージ</h3><p>筋肉の緊張をほぐす</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 3件掲載中</div><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('oxygen')"><div class="genre-icon">🫧</div><h3>酸素カプセル</h3><p>脳疲労・集中力回復に</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 2件掲載中</div><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('stretch')"><div class="genre-icon">🧘</div><h3>ストレッチ</h3><p>体の硬さ・姿勢を改善</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 1件掲載中</div><span class="genre-arrow">→</span></div>
+        <div class="genre-card" onclick="filterShops('bath')"><div class="genre-icon">♨️</div><h3>岩盤浴</h3><p>じっくり温めてデトックス</p><div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#14b8a6">● 1件掲載中</div><span class="genre-arrow">→</span></div>
       </div>
     </div>
   </section>
@@ -381,9 +438,37 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         <p>迷わず、すぐに回復できる体験を</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card"><div class="feature-icon">🧠</div><h3>AI疲労診断</h3><p>5つの質問に答えるだけで、あなたの疲労タイプと最適な回復手段をAIが提案</p></div>
-        <div class="feature-card"><div class="feature-icon">⚡</div><h3>最適スポット提案</h3><p>疲労状態・時間・予算に合わせて、最も効果的な施設をランキング表示</p></div>
-        <div class="feature-card"><div class="feature-icon">📅</div><h3>即時予約</h3><p>気に入ったスポットへそのまま予約。スキマ時間も有効活用できる</p></div>
+        <div class="feature-card"><div class="feature-icon">🧠</div><h3>AI疲労診断（業界初）</h3><p>ホットペッパーにはない独自機能。5つの質問で疲労タイプを判定し、サウナ・整体・マッサージなど最適な回復手段をAIが選択。</p></div>
+        <div class="feature-card"><div class="feature-icon">⚡</div><h3>あなた専用のランキング</h3><p>一般的な人気順ではなく、あなたの疲労状態・予算・時間に完全最適化したスポットをリアルタイムで表示。</p></div>
+        <div class="feature-card"><div class="feature-icon">📅</div><h3>迷わず、今すぐ予約</h3><p>選んだらワンタップで予約。Googleマップ連携で場所も確認できる。スキマ時間を回復に変える。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数字で見るトトナビ -->
+  <section style="background:linear-gradient(135deg,#f0fdfa,#eff6ff)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px" class="stats-numbers">
+        <div style="text-align:center;padding:24px;background:#fff;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+          <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#0d9488,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent">200+</div>
+          <div style="font-weight:700;margin-bottom:4px">掲載スポット</div>
+          <div style="font-size:.78rem;color:#6b7280">全国の厳選施設</div>
+        </div>
+        <div style="text-align:center;padding:24px;background:#fff;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+          <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#0d9488,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent">30,000+</div>
+          <div style="font-weight:700;margin-bottom:4px">AI診断実施数</div>
+          <div style="font-size:.78rem;color:#6b7280">累計診断件数</div>
+        </div>
+        <div style="text-align:center;padding:24px;background:#fff;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+          <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#0d9488,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent">98%</div>
+          <div style="font-weight:700;margin-bottom:4px">回復満足度</div>
+          <div style="font-size:.78rem;color:#6b7280">利用者アンケート</div>
+        </div>
+        <div style="text-align:center;padding:24px;background:#fff;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.06)">
+          <div style="font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#0d9488,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent">1分</div>
+          <div style="font-weight:700;margin-bottom:4px">診断所要時間</div>
+          <div style="font-size:.78rem;color:#6b7280">スキマ時間でOK</div>
+        </div>
       </div>
     </div>
   </section>
@@ -691,13 +776,23 @@ footer{background:#111827;color:#9ca3af;margin-top:auto}
         <p>疲労回復に特化した予約プラットフォーム。<br>AIが最適な回復手段を提案します。</p>
       </div>
       <div class="footer-links">
-        <div class="footer-col"><h4>サービス</h4><ul><li onclick="showPage('shops')">スポット検索</li><li onclick="showPage('diagnosis')">AI疲労診断</li><li onclick="showPage('register')">会員登録</li></ul></div>
+        <div class="footer-col"><h4>サービス</h4><ul><li onclick="showPage('shops')">スポット検索</li><li onclick="showPage('diagnosis')">AI疲労診断</li><li onclick="showPage('register')">会員登録</li><li onclick="showPage('contact')">店舗掲載</li></ul></div>
         <div class="footer-col"><h4>ジャンル</h4><ul><li onclick="filterShops('sauna')">サウナ</li><li onclick="filterShops('seitai')">整体</li><li onclick="filterShops('massage')">マッサージ</li><li onclick="filterShops('oxygen')">酸素カプセル</li></ul></div>
       </div>
     </div>
   </div>
-  <div class="footer-bottom container">© 2024 トトナビ. All rights reserved.</div>
+  <div class="footer-bottom container">
+    <div style="margin-bottom:10px"><span style="display:inline-flex;align-items:center;gap:6px;background:rgba(20,184,166,.15);color:#5eead4;padding:4px 14px;border-radius:99px;font-size:.78rem;font-weight:600">🏆 日本初・回復特化予約プラットフォーム</span></div>
+    © 2026 トトナビ. All rights reserved.
+  </div>
 </footer>
+
+<!-- フローティングCTA -->
+<div id="float-cta" style="position:fixed;bottom:20px;right:20px;z-index:200;display:none">
+  <button onclick="showPage('diagnosis')" style="background:linear-gradient(135deg,#14b8a6,#0d9488);color:#fff;border:none;border-radius:99px;padding:14px 22px;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(14,184,166,.4);display:flex;align-items:center;gap:8px;transition:all .2s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    🧠 AI診断（無料）
+  </button>
+</div>
 
 <script>
 // ========== DATA ==========
@@ -1046,6 +1141,15 @@ const observer=new IntersectionObserver((entries)=>{
 document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
 
 renderHomeShops();
+
+// フローティングCTA表示制御
+window.addEventListener('scroll',()=>{
+  const fc=document.getElementById('float-cta');
+  if(!fc)return;
+  const page=document.querySelector('.page.active');
+  const isHome=page&&page.id==='page-home';
+  fc.style.display=(window.scrollY>300&&isHome)?'block':'none';
+});
 </script>
 </body>
 </html>
